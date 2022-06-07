@@ -1,0 +1,13 @@
+#! /usr/bin/env sh
+
+
+TMP_DIR=$(mktemp -d -t watch-install.XXXXXXXX)
+
+make install DESTDIR=$TMP_DIR > /dev/null
+
+case $1 in
+	tree) tree --noreport $TMP_DIR/* ;;
+	*) find $TMP_DIR -type f ;;
+esac
+
+rm -rf $TMP_DIR
